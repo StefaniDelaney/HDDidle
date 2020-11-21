@@ -9,7 +9,8 @@ void setup() {
 void draw() {
    background(0); //draw bg
    drawHeader(); //draws above ui elements
-   
+   drawFrame();
+   //println(bytes);
 }
 
 void drawHeader() {
@@ -83,13 +84,15 @@ void setRect(int tabType) { //set colors for rectangles (buttons and surrounds)
     fill(80);
   } else if (tabType == 1) { //selected
     fill(130);
+  } else if (tabType == 2) {
+    fill(60);
   }
 }
 
 float convertBytes(float bytesIn) { //converts bytes to kb, mb, etc
   bytesOut = bytesIn;
   endUnit = "by";
-  if (bytesIn >= bytesTemp) {
+  if (bytesIn >= 1024) {
      bytesOut = bytesIn / 1024;
      endUnit = "kB";
   }  if (bytesIn >= pow(1024, 2)) {

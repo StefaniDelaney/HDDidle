@@ -1,8 +1,14 @@
 void mousePressed() {
   mouseClick = detectMouseHeader();
   if (mouseClick != 9) {
-    currentTab = mouseClick--;
+    currentTab = mouseClick;
   } 
+  mouseClick = detectMouseFrame();
+  if (mouseClick == 0) {
+    switchDir = !switchDir;
+    bytesTemp = 0.125 * switchMult;
+    bytes = bytes + bytesTemp;
+  }
 }
 
 int detectMouseHeader() {
@@ -16,6 +22,13 @@ int detectMouseHeader() {
     } else if (mouseX >= 345 && mouseX <= 465) {
       return 3;
     } 
+  }
+  return 9;
+}
+
+int detectMouseFrame() {
+  if (mouseY >= 5 && mouseY <= 205 && mouseX >= 40 && mouseX <= 240) {
+    return 0;
   }
   return 9;
 }

@@ -12,3 +12,6 @@ String endUnit = "by"; //used at the end of the display
 String display = ""; //final display
 
 int mouseClick;
+
+boolean switchDir = false;
+float switchMult = 1;
