@@ -72,23 +72,21 @@ void drawHeader() {
   }
 }
 
-void drawButtons() {
-   rect(0,0,0,0);
-}
-
-void setText() {
+void setText() { //set colors for text
   fill(255);
   stroke(255);
 }
 
-void setRect(int tabType) {
+void setRect(int tabType) { //set colors for rectangles (buttons and surrounds)
   stroke(255);
-  if (tabType == 0) {
+  if (tabType == 0) { //normal
     fill(80);
+  } else if (tabType == 1) { //selected
+    fill(130);
   }
 }
 
-float convertBytes(float bytesIn) {
+float convertBytes(float bytesIn) { //converts bytes to kb, mb, etc
   bytesOut = bytesIn;
   endUnit = "by";
   if (bytesIn >= bytesTemp) {

@@ -10,3 +10,5 @@ float bytesOut;
 float bytesD = 0; //used to display
 String endUnit = "by"; //used at the end of the display 
 String display = ""; //final display
+
+int mouseClick;
