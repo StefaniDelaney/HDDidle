@@ -11,6 +11,15 @@ int bitrate = 0;
 float carrierPrice = 10; //carrier pidgeon price
 float carrierPriceMult = 1;
 int carriers = 0; //amount of carrier pidgeons
+float telegramPrice = 120;
+float telegramPriceMult = 1;
+int telegrams = 0;
+float faxPrice = 1024;
+float faxPriceMult = 1;
+int fax = 0;
+float packetPrice = 10240;
+float packetPriceMult = 1;
+int packets = 0;
 
 float bytes = 0; //players byte count
 float bytesTemp;

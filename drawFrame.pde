@@ -56,6 +56,48 @@ void drawFrame() {
     text(nf(bytesD, 0, 1), 542, 67);
     text(endUnit, 600, 67);
     text(carriers, 463, 67);
+    
+    setRect(0);
+    rect(210, 85, 425, 40, 5);
+    textSize(20);
+    setText();
+    text("telegram 60b/s", 215, 111);
+    setRect(2);
+    rect(457, 90, 75, 30, 5);
+    rect(537, 90, 93, 30, 5);
+    setText();
+    bytesD = convertBytes(telegramPrice);
+    text(nf(bytesD, 0, 1), 542, 112);
+    text(endUnit, 600, 112);
+    text(telegrams, 463, 112);
+
+    setRect(0);
+    rect(210, 130, 425, 40, 5);
+    textSize(20);
+    setText();
+    text("fax machine 720b/s", 215, 156);
+    setRect(2);
+    rect(457, 135, 75, 30, 5);
+    rect(537, 135, 93, 30, 5);
+    setText();
+    bytesD = convertBytes(faxPrice);
+    text(nf(bytesD, 0, 1), 542, 157);
+    text(endUnit, 600, 157);
+    text(fax, 463, 157);
+    
+    setRect(0);
+    rect(210, 175, 425, 40, 5);
+    textSize(20);
+    setText();
+    text("packet switch 1.5kB/s", 215, 201);
+    setRect(2);
+    rect(457, 180, 75, 30, 5);
+    rect(537, 180, 93, 30, 5);
+    setText();
+    bytesD = convertBytes(packetPrice);
+    text(nf(bytesD, 0, 1), 542, 202);
+    text(endUnit, 600, 202);
+    text(packets, 463, 202);
   }
   else if (currentTab == 2) {
     textSize(20);
