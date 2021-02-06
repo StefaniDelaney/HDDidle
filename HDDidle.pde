@@ -3,7 +3,7 @@
 // created by stefani delaney    //
 // and idle game involving semi  //
 // realistic mechanics           //
-// version v0.05                 //
+// version v0.06                 //
 ///////////////////////////////////
 
 void setup() {
