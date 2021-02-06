@@ -3,7 +3,7 @@
 // created by stefani delaney    //
 // and idle game involving semi  //
 // realistic mechanics           //
-// version v0.07                 //
+// version v0.08                 //
 ///////////////////////////////////
 
 void setup() {
@@ -16,11 +16,13 @@ void setup() {
 
 void draw() {
    background(0); //draw bg
-   bitrate = (carriers * 1) + (telegrams * 60) + (fax * 720) + (packets * 1500); //calculate bitrate
-   switchValue = 0.125 * switchMult * switchMult2 + ((cps / 20) * bitrate);
+   bitrate = ((carriers * 1) + (telegrams * 60) + (fax * 720) + (packets * 1500) )/ pow(1024, scalingLevel); //calculate bitrate
+   switchValue = (1000000.125 * switchMult * switchMult2 + ((cps / 20) * bitrate)) / pow(1024, scalingLevel);
    drawHeader(); //draws above ui elements
    drawFrame();
    bitrateAdd();
+   if (bytes >= 1073741824) scaleDownValues();
+   println(scalingLevel);
 }
 
 void drawHeader() {
@@ -102,29 +104,29 @@ void setRect(int tabType) { //set colors for rectangles (buttons and surrounds)
 float convertBytes(float bytesIn) { //converts bytes to kb, mb, etc
   bytesOut = bytesIn;
   endUnit = "by";
-  if (bytesIn >= 1024) {
-     bytesOut = bytesIn / 1024;
+  if (bytesIn >= pow(1024, 1 - scalingLevel)) {
+     bytesOut = bytesIn / pow(1024, 1 - scalingLevel);
      endUnit = "kB";
-  }  if (bytesIn >= pow(1024, 2)) {
-     bytesOut = bytesIn / pow(1024, 2);
+  }  if (bytesIn >= pow(1024, 2 - scalingLevel)) {
+     bytesOut = bytesIn / pow(1024, 2 - scalingLevel);
      endUnit = "MB";
-  }  if (bytesIn >= pow(1024, 3)) {
-     bytesOut = bytesIn / pow(1024, 3);
+  }  if (bytesIn >= pow(1024, 3 - scalingLevel)) {
+     bytesOut = bytesIn / pow(1024, 3 - scalingLevel);
      endUnit = "GB";
-  }  if (bytesIn >= pow(1024, 4)) {
-     bytesOut = bytesIn / pow(1024, 4);
+  }  if (bytesIn >= pow(1024, 4 - scalingLevel)) {
+     bytesOut = bytesIn / pow(1024, 4 - scalingLevel);
      endUnit = "TB";
-  }  if (bytesIn >= pow(1024, 5)) {
-     bytesOut = bytesIn / pow(1024, 5);
+  }  if (bytesIn >= pow(1024, 5 - scalingLevel)) {
+     bytesOut = bytesIn / pow(1024, 5 - scalingLevel);
      endUnit = "PB";
-  }  if (bytesIn >= pow(1024, 6)) {
-     bytesOut = bytesIn / pow(1024, 6);
+  }  if (bytesIn >= pow(1024, 6 - scalingLevel)) {
+     bytesOut = bytesIn / pow(1024, 6 - scalingLevel);
      endUnit = "EB";
-  }  if (bytesIn >= pow(1024, 7)) {
-     bytesOut = bytesIn / pow(1024, 7);
+  }  if (bytesIn >= pow(1024, 7 - scalingLevel)) {
+     bytesOut = bytesIn / pow(1024, 7 - scalingLevel);
      endUnit = "ZB";
-  }  if (bytesIn >= pow(1024, 8)) {
-     bytesOut = bytesIn / pow(1024, 8);
+  }  if (bytesIn >= pow(1024, 8 - scalingLevel)) {
+     bytesOut = bytesIn / pow(1024, 8 - scalingLevel);
      endUnit = "YB";
   }
   return bytesOut;
@@ -142,5 +144,15 @@ void bitrateAdd() {
     frames = 0;  
   }
   }
-    
+}
+
+void scaleDownValues() { //basically shifts all values down by 1024
+  scalingLevel++;
+  bytes = bytes / 1024;
+  linkSwitchPrice = linkSwitchPrice / 1024;
+  cpsPrice = cpsPrice / 1024;
+  carrierPrice = carrierPrice / 1024;
+  telegramPrice = telegramPrice / 1024;
+  faxPrice = faxPrice / 1024;
+  packetPrice = packetPrice / 1024;
 }

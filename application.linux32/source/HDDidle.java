@@ -19,7 +19,7 @@ public class HDDidle extends PApplet {
 // created by stefani delaney    //
 // and idle game involving semi  //
 // realistic mechanics           //
-// version v0.07                 //
+// version v0.08                 //
 ///////////////////////////////////
 
 public void setup() {
@@ -32,11 +32,13 @@ public void setup() {
 
 public void draw() {
    background(0); //draw bg
-   bitrate = (carriers * 1) + (telegrams * 60) + (fax * 720) + (packets * 1500); //calculate bitrate
-   switchValue = 0.125f * switchMult * switchMult2 + ((cps / 20) * bitrate);
+   bitrate = ((carriers * 1) + (telegrams * 60) + (fax * 720) + (packets * 1500) )/ pow(1024, scalingLevel); //calculate bitrate
+   switchValue = (1000000.125f * switchMult * switchMult2 + ((cps / 20) * bitrate)) / pow(1024, scalingLevel);
    drawHeader(); //draws above ui elements
    drawFrame();
    bitrateAdd();
+   if (bytes >= 1073741824) scaleDownValues();
+   println(scalingLevel);
 }
 
 public void drawHeader() {
@@ -118,29 +120,29 @@ public void setRect(int tabType) { //set colors for rectangles (buttons and surr
 public float convertBytes(float bytesIn) { //converts bytes to kb, mb, etc
   bytesOut = bytesIn;
   endUnit = "by";
-  if (bytesIn >= 1024) {
-     bytesOut = bytesIn / 1024;
+  if (bytesIn >= pow(1024, 1 - scalingLevel)) {
+     bytesOut = bytesIn / pow(1024, 1 - scalingLevel);
      endUnit = "kB";
-  }  if (bytesIn >= pow(1024, 2)) {
-     bytesOut = bytesIn / pow(1024, 2);
+  }  if (bytesIn >= pow(1024, 2 - scalingLevel)) {
+     bytesOut = bytesIn / pow(1024, 2 - scalingLevel);
      endUnit = "MB";
-  }  if (bytesIn >= pow(1024, 3)) {
-     bytesOut = bytesIn / pow(1024, 3);
+  }  if (bytesIn >= pow(1024, 3 - scalingLevel)) {
+     bytesOut = bytesIn / pow(1024, 3 - scalingLevel);
      endUnit = "GB";
-  }  if (bytesIn >= pow(1024, 4)) {
-     bytesOut = bytesIn / pow(1024, 4);
+  }  if (bytesIn >= pow(1024, 4 - scalingLevel)) {
+     bytesOut = bytesIn / pow(1024, 4 - scalingLevel);
      endUnit = "TB";
-  }  if (bytesIn >= pow(1024, 5)) {
-     bytesOut = bytesIn / pow(1024, 5);
+  }  if (bytesIn >= pow(1024, 5 - scalingLevel)) {
+     bytesOut = bytesIn / pow(1024, 5 - scalingLevel);
      endUnit = "PB";
-  }  if (bytesIn >= pow(1024, 6)) {
-     bytesOut = bytesIn / pow(1024, 6);
+  }  if (bytesIn >= pow(1024, 6 - scalingLevel)) {
+     bytesOut = bytesIn / pow(1024, 6 - scalingLevel);
      endUnit = "EB";
-  }  if (bytesIn >= pow(1024, 7)) {
-     bytesOut = bytesIn / pow(1024, 7);
+  }  if (bytesIn >= pow(1024, 7 - scalingLevel)) {
+     bytesOut = bytesIn / pow(1024, 7 - scalingLevel);
      endUnit = "ZB";
-  }  if (bytesIn >= pow(1024, 8)) {
-     bytesOut = bytesIn / pow(1024, 8);
+  }  if (bytesIn >= pow(1024, 8 - scalingLevel)) {
+     bytesOut = bytesIn / pow(1024, 8 - scalingLevel);
      endUnit = "YB";
   }
   return bytesOut;
@@ -158,7 +160,17 @@ public void bitrateAdd() {
     frames = 0;  
   }
   }
-    
+}
+
+public void scaleDownValues() { //basically shifts all values down by 1024
+  scalingLevel++;
+  bytes = bytes / 1024;
+  linkSwitchPrice = linkSwitchPrice / 1024;
+  cpsPrice = cpsPrice / 1024;
+  carrierPrice = carrierPrice / 1024;
+  telegramPrice = telegramPrice / 1024;
+  faxPrice = faxPrice / 1024;
+  packetPrice = packetPrice / 1024;
 }
 public void drawFrame() {
   if (currentTab == 0) {
@@ -181,6 +193,7 @@ public void drawFrame() {
      setText();
      bytesD = convertBytes(switchValue);
      text(nf(bytesD, 0, 3), 12, 230);
+     text(endUnit, 175, 230);
      setRect(0);
      rect(210, 40, 425, 40, 5);
      textSize(20);
@@ -417,6 +430,7 @@ int storTabState = 0;
 int fsTabState = 0;
 int currentTab = 0; //0 data, 1 network, 2 storage, 3 fs
 int raidStandard = 0; //raid numbers
+int scalingLevel = 0; //used for scaling the values to account for the lack of size on floats
 
 float linkSwitchPrice = 1;
 float linkSwitchPriceMult = 1;
@@ -426,7 +440,7 @@ float cpsPrice = 10;
 float cpsPriceMult = 1;
 long cps = 0;
 
-int bitrate = 0;
+float bitrate = 0;
 
 float carrierPrice = 10; //carrier pidgeon price
 float carrierPriceMult = 1;
@@ -444,7 +458,7 @@ float packetPrice = 10240;
 float packetPriceMult = 1;
 int packets = 0;
 
-float bytes = 0; //players byte count
+float bytes = 1000000000; //players byte count
 float bytesTemp;
 float bytesOut;
 float bytesD = 0; //used to display
@@ -457,7 +471,7 @@ int mouseClick;
 boolean switchDir = false;
 float switchMult = 1; //used for linked
 float switchMult2 = 1; //used for raid
-float switchValue = 0.125f; //bytes from flipping switch
+float switchValue = 0; //bytes from flipping switch
   public void settings() {  size(640, 480); }
   static public void main(String[] passedArgs) {
     String[] appletArgs = new String[] { "HDDidle" };

@@ -19,6 +19,7 @@ void drawFrame() {
      setText();
      bytesD = convertBytes(switchValue);
      text(nf(bytesD, 0, 3), 12, 230);
+     text(endUnit, 175, 230);
      setRect(0);
      rect(210, 40, 425, 40, 5);
      textSize(20);
