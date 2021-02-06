@@ -3,7 +3,7 @@
 // created by stefani delaney    //
 // and idle game involving semi  //
 // realistic mechanics           //
-// version v0.06                 //
+// version v0.07                 //
 ///////////////////////////////////
 
 void setup() {
@@ -16,6 +16,8 @@ void setup() {
 
 void draw() {
    background(0); //draw bg
+   bitrate = (carriers * 1) + (telegrams * 60) + (fax * 720) + (packets * 1500); //calculate bitrate
+   switchValue = 0.125 * switchMult * switchMult2 + ((cps / 20) * bitrate);
    drawHeader(); //draws above ui elements
    drawFrame();
    bitrateAdd();

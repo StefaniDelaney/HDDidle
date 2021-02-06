@@ -16,6 +16,9 @@ void drawFrame() {
      } else {
        rect(92, 150, 25, 70, 5);
      }
+     setText();
+     bytesD = convertBytes(switchValue);
+     text(nf(bytesD, 0, 3), 12, 230);
      setRect(0);
      rect(210, 40, 425, 40, 5);
      textSize(20);
@@ -29,6 +32,20 @@ void drawFrame() {
      text(nf(bytesD, 0, 1), 542, 67);
      text(endUnit, 600, 67);
      text(linkSwitch, 463, 67);
+     
+    setRect(0);
+    rect(210, 85, 425, 40, 5);
+    textSize(20);
+    setText();
+    text("5% of bytes/s", 215, 111);
+    setRect(2);
+    rect(457, 90, 75, 30, 5);
+    rect(537, 90, 93, 30, 5);
+    setText();
+    bytesD = convertBytes(cpsPrice);
+    text(nf(bytesD, 0, 1), 542, 112);
+    text(endUnit, 600, 112);
+    text((int)cps, 463, 112);
   }
   else if (currentTab == 1) {
     textSize(20);

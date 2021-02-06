@@ -19,7 +19,7 @@ public class HDDidle extends PApplet {
 // created by stefani delaney    //
 // and idle game involving semi  //
 // realistic mechanics           //
-// version v0.06                 //
+// version v0.07                 //
 ///////////////////////////////////
 
 public void setup() {
@@ -32,6 +32,8 @@ public void setup() {
 
 public void draw() {
    background(0); //draw bg
+   bitrate = (carriers * 1) + (telegrams * 60) + (fax * 720) + (packets * 1500); //calculate bitrate
+   switchValue = 0.125f * switchMult * switchMult2 + ((cps / 20) * bitrate);
    drawHeader(); //draws above ui elements
    drawFrame();
    bitrateAdd();
@@ -176,6 +178,9 @@ public void drawFrame() {
      } else {
        rect(92, 150, 25, 70, 5);
      }
+     setText();
+     bytesD = convertBytes(switchValue);
+     text(nf(bytesD, 0, 3), 12, 230);
      setRect(0);
      rect(210, 40, 425, 40, 5);
      textSize(20);
@@ -189,6 +194,20 @@ public void drawFrame() {
      text(nf(bytesD, 0, 1), 542, 67);
      text(endUnit, 600, 67);
      text(linkSwitch, 463, 67);
+     
+    setRect(0);
+    rect(210, 85, 425, 40, 5);
+    textSize(20);
+    setText();
+    text("5% of bytes/s", 215, 111);
+    setRect(2);
+    rect(457, 90, 75, 30, 5);
+    rect(537, 90, 93, 30, 5);
+    setText();
+    bytesD = convertBytes(cpsPrice);
+    text(nf(bytesD, 0, 1), 542, 112);
+    text(endUnit, 600, 112);
+    text((int)cps, 463, 112);
   }
   else if (currentTab == 1) {
     textSize(20);
@@ -290,7 +309,7 @@ public void mousePressed() {
   if (currentTab == 0){
     if (mouseClick == 1) {
       switchDir = !switchDir;
-      bytesTemp = 0.125f * switchMult * switchMult2;
+      bytesTemp = switchValue;
       bytes = bytes + bytesTemp;
     }
     else if (mouseClick == 2) {
@@ -302,12 +321,19 @@ public void mousePressed() {
         linkSwitchPrice = linkSwitchPrice * linkSwitchPriceMult;
       }
     }
+    else if (mouseClick == 3) {
+      if (bytes >= cpsPrice) {
+        cps++;
+        bytes = bytes - cpsPrice;
+        cpsPriceMult = cpsPriceMult * 1.1f;
+        cpsPrice = cpsPrice * cpsPriceMult;
+      }
+    }
   }
   else if (currentTab == 1) {
     if (mouseClick == 1) {
       if (bytes >= carrierPrice) {
         carriers++;
-        bitrate++;
         bytes = bytes - carrierPrice;
         carrierPriceMult = carrierPriceMult * 1.1f;
         carrierPrice = carrierPrice * carrierPriceMult;
@@ -316,7 +342,6 @@ public void mousePressed() {
     else if (mouseClick == 2) {
       if (bytes >= telegramPrice) {
         telegrams++;
-        bitrate = bitrate + 60;
         bytes = bytes - telegramPrice;
         telegramPriceMult = telegramPriceMult * 1.1f;
         telegramPrice = telegramPrice * telegramPriceMult;
@@ -325,7 +350,6 @@ public void mousePressed() {
     else if (mouseClick == 3) {
       if (bytes >= faxPrice) {
         fax++;
-        bitrate = bitrate + 720;
         bytes = bytes - faxPrice;
         faxPriceMult = faxPriceMult * 1.1f;
         faxPrice = faxPrice * faxPriceMult;
@@ -334,7 +358,6 @@ public void mousePressed() {
     else if (mouseClick == 4) {
       if (bytes >= packetPrice) {
         packets++;
-        bitrate = bitrate + 1500;
         bytes = bytes - packetPrice;
         packetPriceMult = packetPriceMult * 1.1f;
         packetPrice = packetPrice * packetPriceMult;
@@ -366,6 +389,9 @@ public int detectMouseFrame() {
     else if (mouseY >= 40 && mouseY <= 80 && mouseX >= 210 && mouseX <= 635) {
       return 2; //link switch
     }
+    else if (mouseY >= 85 && mouseY <= 125 && mouseX >= 210 && mouseX <= 635) {
+      return 3; //cps
+    }
   }
   else if (currentTab == 1) {
     if (mouseY >= 40 && mouseY <= 80 && mouseX >= 210 && mouseX <= 635) {
@@ -391,19 +417,29 @@ int storTabState = 0;
 int fsTabState = 0;
 int currentTab = 0; //0 data, 1 network, 2 storage, 3 fs
 int raidStandard = 0; //raid numbers
+
 float linkSwitchPrice = 1;
 float linkSwitchPriceMult = 1;
 int linkSwitch = 0; //amount of linked switches
+
+float cpsPrice = 10;
+float cpsPriceMult = 1;
+long cps = 0;
+
 int bitrate = 0;
+
 float carrierPrice = 10; //carrier pidgeon price
 float carrierPriceMult = 1;
 int carriers = 0; //amount of carrier pidgeons
+
 float telegramPrice = 120;
 float telegramPriceMult = 1;
 int telegrams = 0;
+
 float faxPrice = 1024;
 float faxPriceMult = 1;
 int fax = 0;
+
 float packetPrice = 10240;
 float packetPriceMult = 1;
 int packets = 0;
@@ -421,6 +457,7 @@ int mouseClick;
 boolean switchDir = false;
 float switchMult = 1; //used for linked
 float switchMult2 = 1; //used for raid
+float switchValue = 0.125f; //bytes from flipping switch
   public void settings() {  size(640, 480); }
   static public void main(String[] passedArgs) {
     String[] appletArgs = new String[] { "HDDidle" };

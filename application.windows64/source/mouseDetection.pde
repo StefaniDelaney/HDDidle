@@ -7,7 +7,7 @@ void mousePressed() {
   if (currentTab == 0){
     if (mouseClick == 1) {
       switchDir = !switchDir;
-      bytesTemp = 0.125 * switchMult * switchMult2;
+      bytesTemp = switchValue;
       bytes = bytes + bytesTemp;
     }
     else if (mouseClick == 2) {
@@ -19,12 +19,19 @@ void mousePressed() {
         linkSwitchPrice = linkSwitchPrice * linkSwitchPriceMult;
       }
     }
+    else if (mouseClick == 3) {
+      if (bytes >= cpsPrice) {
+        cps++;
+        bytes = bytes - cpsPrice;
+        cpsPriceMult = cpsPriceMult * 1.1;
+        cpsPrice = cpsPrice * cpsPriceMult;
+      }
+    }
   }
   else if (currentTab == 1) {
     if (mouseClick == 1) {
       if (bytes >= carrierPrice) {
         carriers++;
-        bitrate++;
         bytes = bytes - carrierPrice;
         carrierPriceMult = carrierPriceMult * 1.1;
         carrierPrice = carrierPrice * carrierPriceMult;
@@ -33,7 +40,6 @@ void mousePressed() {
     else if (mouseClick == 2) {
       if (bytes >= telegramPrice) {
         telegrams++;
-        bitrate = bitrate + 60;
         bytes = bytes - telegramPrice;
         telegramPriceMult = telegramPriceMult * 1.1;
         telegramPrice = telegramPrice * telegramPriceMult;
@@ -42,7 +48,6 @@ void mousePressed() {
     else if (mouseClick == 3) {
       if (bytes >= faxPrice) {
         fax++;
-        bitrate = bitrate + 720;
         bytes = bytes - faxPrice;
         faxPriceMult = faxPriceMult * 1.1;
         faxPrice = faxPrice * faxPriceMult;
@@ -51,7 +56,6 @@ void mousePressed() {
     else if (mouseClick == 4) {
       if (bytes >= packetPrice) {
         packets++;
-        bitrate = bitrate + 1500;
         bytes = bytes - packetPrice;
         packetPriceMult = packetPriceMult * 1.1;
         packetPrice = packetPrice * packetPriceMult;
@@ -82,6 +86,9 @@ int detectMouseFrame() {
     }
     else if (mouseY >= 40 && mouseY <= 80 && mouseX >= 210 && mouseX <= 635) {
       return 2; //link switch
+    }
+    else if (mouseY >= 85 && mouseY <= 125 && mouseX >= 210 && mouseX <= 635) {
+      return 3; //cps
     }
   }
   else if (currentTab == 1) {
