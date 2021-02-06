@@ -4,10 +4,22 @@ void mousePressed() {
     currentTab = mouseClick;
   } 
   mouseClick = detectMouseFrame();
-  if (mouseClick == 0) {
-    switchDir = !switchDir;
-    bytesTemp = 0.125 * switchMult;
-    bytes = bytes + bytesTemp;
+  if (currentTab == 0){
+    if (mouseClick == 1) {
+      switchDir = !switchDir;
+      bytesTemp = 0.125 * switchMult;
+      bytes = bytes + bytesTemp;
+    }
+    else if (mouseClick == 2) {
+      if (bytes >= linkSwitchPrice) {
+        linkSwitch++;
+        switchMult++;
+        bytes = bytes - linkSwitchPrice;
+        linkSwitchPrice++;
+        linkSwitchPrice = linkSwitchPrice * 2;
+        println(linkSwitchPrice);
+      }
+    }
   }
 }
 
@@ -27,8 +39,17 @@ int detectMouseHeader() {
 }
 
 int detectMouseFrame() {
-  if (mouseY >= 5 && mouseY <= 205 && mouseX >= 40 && mouseX <= 240) {
-    return 0;
+  if (currentTab == 0) {
+    if (mouseY >= 5 && mouseY <= 205 && mouseX >= 40 && mouseX <= 240) {
+      return 1; //switch clicker
+    }
+    else if (mouseY >= 40 && mouseY <= 80 && mouseX >= 210 && mouseX <= 635) {
+      return 2; //link switch
+    }
   }
-  return 9;
+  else if (currentTab == 1) {
+  }
+  else if (currentTab == 2) {
+  }
+  return 0;
 }

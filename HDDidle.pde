@@ -1,8 +1,16 @@
+///////////////////////////////////
+// HDDidle                       //
+// created by stefani delaney    //
+// and idle game involving semi  //
+// realistic mechanics           //
+// version v0.05                 //
+///////////////////////////////////
+
 void setup() {
     size(640, 480);
     //load save
     String[] saveData = loadStrings("savefile.txt");
-    bytes = float(saveData[0]);
+    //bytes = float(saveData[0]);
     
 }
 
