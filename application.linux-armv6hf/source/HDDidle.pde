@@ -17,7 +17,7 @@ void setup() {
 void draw() {
    background(0); //draw bg
    bitrate = ((carriers * 1) + (telegrams * 60) + (fax * 720) + (packets * 1500) )/ pow(1024, scalingLevel); //calculate bitrate
-   switchValue = (1000000.125 * switchMult * switchMult2 + ((cps / 20) * bitrate)) / pow(1024, scalingLevel);
+   switchValue = (0.125 * switchMult * switchMult2 + ((cps / 20) * bitrate)) / pow(1024, scalingLevel);
    drawHeader(); //draws above ui elements
    drawFrame();
    bitrateAdd();

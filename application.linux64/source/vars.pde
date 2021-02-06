@@ -32,7 +32,7 @@ float packetPrice = 10240;
 float packetPriceMult = 1;
 int packets = 0;
 
-float bytes = 1000000000; //players byte count
+float bytes = 0; //players byte count
 float bytesTemp;
 float bytesOut;
 float bytesD = 0; //used to display
