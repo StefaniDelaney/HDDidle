@@ -7,7 +7,7 @@ void mousePressed() {
   if (currentTab == 0){
     if (mouseClick == 1) {
       switchDir = !switchDir;
-      bytesTemp = 0.125 * switchMult;
+      bytesTemp = 0.125 * switchMult * switchMult2;
       bytes = bytes + bytesTemp;
     }
     else if (mouseClick == 2) {
@@ -17,7 +17,16 @@ void mousePressed() {
         bytes = bytes - linkSwitchPrice;
         linkSwitchPrice++;
         linkSwitchPrice = linkSwitchPrice * 2;
-        println(linkSwitchPrice);
+      }
+    }
+  }
+  else if (currentTab == 1) {
+    if (mouseClick == 1) {
+      if (bytes >= carrierPrice) {
+        carriers++;
+        bitrate++;
+        bytes = bytes - carrierPrice;
+        carrierPrice = carrierPrice * 2;
       }
     }
   }
@@ -48,6 +57,9 @@ int detectMouseFrame() {
     }
   }
   else if (currentTab == 1) {
+    if (mouseY >= 40 && mouseY <= 80 && mouseX >= 210 && mouseX <= 635) {
+      return 1; //carrier pidgeon
+    }
   }
   else if (currentTab == 2) {
   }

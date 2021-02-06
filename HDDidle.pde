@@ -18,7 +18,7 @@ void draw() {
    background(0); //draw bg
    drawHeader(); //draws above ui elements
    drawFrame();
-   //println(bytes);
+   bitrateAdd();
 }
 
 void drawHeader() {
@@ -126,4 +126,19 @@ float convertBytes(float bytesIn) { //converts bytes to kb, mb, etc
      endUnit = "YB";
   }
   return bytesOut;
+}
+
+void bitrateAdd() {
+  if (bitrate > 600) {
+    float tempBitrate = bitrate / 60;
+    bytes = bytes + tempBitrate;
+  }
+  else {
+    frames++;
+    if (frames == 59) {
+    bytes = bytes + bitrate;
+    frames = 0;  
+  }
+  }
+    
 }

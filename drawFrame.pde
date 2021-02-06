@@ -26,12 +26,36 @@ void drawFrame() {
      rect(537, 45, 93, 30, 5);
      setText();
      bytesD = convertBytes(linkSwitchPrice);
-     display = str(bytesD);
      text(nf(bytesD, 0, 1), 542, 67);
      text(endUnit, 600, 67);
      text(linkSwitch, 463, 67);
   }
   else if (currentTab == 1) {
+    textSize(20);
+    setRect(0);
+    rect(5, 40, 200, 200, 5);
+    setText();
+    text("total bitrate", 10, 62);
+    setRect(2);
+    rect(10, 70, 190, 165, 5);
+    setText();
+    textSize(40);
+    bytesD = convertBytes(bitrate);
+    text(nf(bytesD, 0, 3), 20, 140);
+    text(endUnit, 80, 190);
+    setRect(0);
+    rect(210, 40, 425, 40, 5);
+    textSize(20);
+    setText();
+    text("carrier pidgeon 1b/s", 215, 66);
+    setRect(2);
+    rect(457, 45, 75, 30, 5);
+    rect(537, 45, 93, 30, 5);
+    setText();
+    bytesD = convertBytes(carrierPrice);
+    text(nf(bytesD, 0, 1), 542, 67);
+    text(endUnit, 600, 67);
+    text(carriers, 463, 67);
   }
   else if (currentTab == 2) {
     textSize(20);
