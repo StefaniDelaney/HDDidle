@@ -40,7 +40,7 @@ int detectMouseHeader() {
 
 int detectMouseFrame() {
   if (currentTab == 0) {
-    if (mouseY >= 5 && mouseY <= 205 && mouseX >= 40 && mouseX <= 240) {
+    if (mouseY >= 40 && mouseY <= 240 && mouseX >= 5 && mouseX <= 240) {
       return 1; //switch clicker
     }
     else if (mouseY >= 40 && mouseY <= 80 && mouseX >= 210 && mouseX <= 635) {
