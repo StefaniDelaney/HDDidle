@@ -4,10 +4,12 @@ int storTabState = 0;
 int fsTabState = 0;
 int currentTab = 0; //0 data, 1 network, 2 storage, 3 fs
 int raidStandard = 0; //raid numbers
-int linkSwitchPrice = 1;
+float linkSwitchPrice = 1;
+float linkSwitchPriceMult = 1;
 int linkSwitch = 0; //amount of linked switches
 int bitrate = 0;
-int carrierPrice = 10; //carrier pidgeon price
+float carrierPrice = 10; //carrier pidgeon price
+float carrierPriceMult = 1;
 int carriers = 0; //amount of carrier pidgeons
 
 float bytes = 0; //players byte count

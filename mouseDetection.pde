@@ -15,8 +15,8 @@ void mousePressed() {
         linkSwitch++;
         switchMult++;
         bytes = bytes - linkSwitchPrice;
-        linkSwitchPrice++;
-        linkSwitchPrice = linkSwitchPrice * 2;
+        linkSwitchPriceMult = linkSwitchPriceMult * 1.1;
+        linkSwitchPrice = linkSwitchPrice * linkSwitchPriceMult;
       }
     }
   }
@@ -26,7 +26,8 @@ void mousePressed() {
         carriers++;
         bitrate++;
         bytes = bytes - carrierPrice;
-        carrierPrice = carrierPrice * 2;
+        carrierPriceMult = carrierPriceMult * 1.1;
+        carrierPrice = carrierPrice * carrierPriceMult;
       }
     }
   }
