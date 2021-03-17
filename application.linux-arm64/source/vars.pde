@@ -44,7 +44,7 @@ float multiplexerPrice = 10240000;
 float multiplexerPriceMult = 1;
 int multiplexers = 0;
 
-float bytes = 0; //players byte count
+float bytes = 99999990; //players byte count
 float bytesTemp;
 float bytesOut;
 float bytesD = 0; //used to display

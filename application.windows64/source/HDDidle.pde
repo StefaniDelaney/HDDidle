@@ -16,7 +16,8 @@ void setup() {
 
 void draw() {
    background(0); //draw bg
-   speedBonusAdd = (bytes / pow(1024, scalingLevel)) / (1048576 * (speedBonus + 1));
+   speedBonusAdd = (bytes * pow(1024, scalingLevel)) / (1048576 * (speedBonus + 1));
+   if (speedBonusAdd >= 1.0) speedBonusAdd = 1.0;
    bitrate = ((carriers * 1) + (telegrams * 60) + (fax * 720) + (packets * 1500) + (dialup * 7168) + (multiplexers * 107520))/ pow(1024, scalingLevel); //calculate bitrate
    bitrate = bitrate * (speedBonus + 1) * (fileSystemBonus + 1);
    switchValue = (0.125 * switchMult * switchMult2 + (cps * bitrate)) / pow(1024, scalingLevel);
@@ -162,6 +163,7 @@ void scaleDownValues() { //basically shifts all values down by 1024
 }
 
 void resetVars() {
+  scalingLevel = 0;
   bytes = 0;
   linkSwitchPrice = 1;
   linkSwitchPriceMult = 1;

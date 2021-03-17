@@ -163,7 +163,7 @@ void drawFrame() {
     rect(225, 40, 410, 85, 5);
     textSize(20);
     setText();
-    text("defrag drives (reset everything)", 230, 66);
+    text("defrag drives (reset everything, max 1.0)", 230, 66);
     setRect(2);
     
     setRect(0);
@@ -173,6 +173,6 @@ void drawFrame() {
     textSize(20);
     setText();
     text("bonus if defragged now", 230, 111);
-    text(speedBonusAdd, 542, 112);
+    text(speedBonusAdd, 540, 112);
   }
 }

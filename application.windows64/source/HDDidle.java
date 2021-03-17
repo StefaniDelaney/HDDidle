@@ -32,7 +32,8 @@ public void setup() {
 
 public void draw() {
    background(0); //draw bg
-   speedBonusAdd = (bytes / pow(1024, scalingLevel)) / (1048576 * (speedBonus + 1));
+   speedBonusAdd = (bytes * pow(1024, scalingLevel)) / (1048576 * (speedBonus + 1));
+   if (speedBonusAdd >= 1.0f) speedBonusAdd = 1.0f;
    bitrate = ((carriers * 1) + (telegrams * 60) + (fax * 720) + (packets * 1500) + (dialup * 7168) + (multiplexers * 107520))/ pow(1024, scalingLevel); //calculate bitrate
    bitrate = bitrate * (speedBonus + 1) * (fileSystemBonus + 1);
    switchValue = (0.125f * switchMult * switchMult2 + (cps * bitrate)) / pow(1024, scalingLevel);
@@ -178,6 +179,7 @@ public void scaleDownValues() { //basically shifts all values down by 1024
 }
 
 public void resetVars() {
+  scalingLevel = 0;
   bytes = 0;
   linkSwitchPrice = 1;
   linkSwitchPriceMult = 1;
@@ -371,7 +373,7 @@ public void drawFrame() {
     rect(225, 40, 410, 85, 5);
     textSize(20);
     setText();
-    text("defrag drives (reset everything)", 230, 66);
+    text("defrag drives (reset everything, max 1.0)", 230, 66);
     setRect(2);
     
     setRect(0);
@@ -381,7 +383,7 @@ public void drawFrame() {
     textSize(20);
     setText();
     text("bonus if defragged now", 230, 111);
-    text(speedBonusAdd, 542, 112);
+    text(speedBonusAdd, 540, 112);
   }
 }
 public void mousePressed() {
@@ -571,7 +573,7 @@ float multiplexerPrice = 10240000;
 float multiplexerPriceMult = 1;
 int multiplexers = 0;
 
-float bytes = 0; //players byte count
+float bytes = 99999990; //players byte count
 float bytesTemp;
 float bytesOut;
 float bytesD = 0; //used to display
