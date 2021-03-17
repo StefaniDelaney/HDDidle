@@ -32,7 +32,9 @@ public void setup() {
 
 public void draw() {
    background(0); //draw bg
+   speedBonusAdd = (bytes / pow(1024, scalingLevel)) / (1048576 * (speedBonus + 1));
    bitrate = ((carriers * 1) + (telegrams * 60) + (fax * 720) + (packets * 1500) + (dialup * 7168) + (multiplexers * 107520))/ pow(1024, scalingLevel); //calculate bitrate
+   bitrate = bitrate * (speedBonus + 1) * (fileSystemBonus + 1);
    switchValue = (0.125f * switchMult * switchMult2 + (cps * bitrate)) / pow(1024, scalingLevel);
    drawHeader(); //draws above ui elements
    drawFrame();
@@ -171,6 +173,38 @@ public void scaleDownValues() { //basically shifts all values down by 1024
   telegramPrice = telegramPrice / 1024;
   faxPrice = faxPrice / 1024;
   packetPrice = packetPrice / 1024;
+  dialupPrice = dialupPrice / 1024;
+  multiplexerPrice = multiplexerPrice / 1024;
+}
+
+public void resetVars() {
+  bytes = 0;
+  linkSwitchPrice = 1;
+  linkSwitchPriceMult = 1;
+  linkSwitch = 0;
+cpsPrice = 102400;
+cpsPriceMult = 1;
+cps = 0;
+carrierPrice = 10; 
+carrierPriceMult = 1;
+carriers = 0;
+telegramPrice = 1024;
+telegramPriceMult = 1;
+telegrams = 0;
+faxPrice = 102400;
+faxPriceMult = 1;
+fax = 0;
+packetPrice = 307200;
+packetPriceMult = 1;
+packets = 0;
+dialupPrice = 1048576;
+dialupPriceMult = 1;
+dialup = 0;
+multiplexerPrice = 10240000;
+multiplexerPriceMult = 1;
+multiplexers = 0;
+switchMult = 1;
+switchMult2 = 1;
 }
 public void drawFrame() {
   if (currentTab == 0) {
@@ -305,7 +339,7 @@ public void drawFrame() {
     bytesD = convertBytes(dialupPrice);
     text(nf(bytesD, 0, 1), 542, 247);
     text(endUnit, 600, 247);
-    text(packets, 463, 247);
+    text(dialup, 463, 247);
     
     setRect(0);
     rect(210, 265, 425, 40, 5);
@@ -326,21 +360,28 @@ public void drawFrame() {
     setRect(0);
     rect(5, 40, 215, 215, 5);
     setText();
-    text("current raid standard", 10, 62);
+    text("current speed bonus", 10, 62);
     setRect(2);
     rect(10, 70, 205, 180, 5);
-    textSize(100);
+    textSize(40);
     setText();
-    text(raidStandard, 80, 200);
+    text(speedBonus, 5, 175);
+    
     setRect(0);
-    rect(225, 40, 410, 40, 5);
+    rect(225, 40, 410, 85, 5);
     textSize(20);
     setText();
-    if (raidStandard == 0) {
-      text("raid 1", 230, 66);
-      setRect(2);
-      
-    }
+    text("defrag drives (reset everything)", 230, 66);
+    setRect(2);
+    
+    setRect(0);
+    //rect(225, 85, 410, 40, 5);
+    setRect(2);
+    rect(537, 90, 93, 30, 5);
+    textSize(20);
+    setText();
+    text("bonus if defragged now", 230, 111);
+    text(speedBonusAdd, 542, 112);
   }
 }
 public void mousePressed() {
@@ -418,10 +459,17 @@ public void mousePressed() {
       if (bytes >= multiplexerPrice) {
         multiplexers++;
         bytes = bytes - multiplexerPrice;
-        dialupPriceMult = multiplexerPriceMult * 1.1f;
+        multiplexerPriceMult = multiplexerPriceMult * 1.1f;
         multiplexerPrice = multiplexerPrice * multiplexerPriceMult;
       }
     }
+  }
+  else if (currentTab == 2) {
+     if (mouseClick == 1) {
+        speedBonuses++;
+        speedBonus = speedBonus + speedBonusAdd;
+        resetVars();
+  }
   }
 }
 
@@ -473,6 +521,7 @@ public int detectMouseFrame() {
     }
   }
   else if (currentTab == 2) {
+    if (mouseY >= 40 && mouseY <= 125 && mouseX >= 210 && mouseX <= 635) return 1;
   }
   return 0;
 }
@@ -481,8 +530,12 @@ int netTabState = 0;
 int storTabState = 0;
 int fsTabState = 0;
 int currentTab = 0; //0 data, 1 network, 2 storage, 3 fs
-int raidStandard = 0; //raid numbers
 int scalingLevel = 0; //used for scaling the values to account for the lack of size on floats
+float speedBonus = 0.00f; //speed bonus for prestige
+float speedBonusAdd = 0; //amount to add to speed bonus
+int speedBonuses = 0; //used for exp math
+
+float fileSystemBonus = 0; //bonus from file system upgrades
 
 float linkSwitchPrice = 1;
 float linkSwitchPriceMult = 1;

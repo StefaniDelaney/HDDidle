@@ -3,8 +3,12 @@ int netTabState = 0;
 int storTabState = 0;
 int fsTabState = 0;
 int currentTab = 0; //0 data, 1 network, 2 storage, 3 fs
-int raidStandard = 0; //raid numbers
 int scalingLevel = 0; //used for scaling the values to account for the lack of size on floats
+float speedBonus = 0.00; //speed bonus for prestige
+float speedBonusAdd = 0; //amount to add to speed bonus
+int speedBonuses = 0; //used for exp math
+
+float fileSystemBonus = 0; //bonus from file system upgrades
 
 float linkSwitchPrice = 1;
 float linkSwitchPriceMult = 1;

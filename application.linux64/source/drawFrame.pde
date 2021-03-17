@@ -131,7 +131,7 @@ void drawFrame() {
     bytesD = convertBytes(dialupPrice);
     text(nf(bytesD, 0, 1), 542, 247);
     text(endUnit, 600, 247);
-    text(packets, 463, 247);
+    text(dialup, 463, 247);
     
     setRect(0);
     rect(210, 265, 425, 40, 5);
@@ -152,20 +152,27 @@ void drawFrame() {
     setRect(0);
     rect(5, 40, 215, 215, 5);
     setText();
-    text("current raid standard", 10, 62);
+    text("current speed bonus", 10, 62);
     setRect(2);
     rect(10, 70, 205, 180, 5);
-    textSize(100);
+    textSize(40);
     setText();
-    text(raidStandard, 80, 200);
+    text(speedBonus, 5, 175);
+    
     setRect(0);
-    rect(225, 40, 410, 40, 5);
+    rect(225, 40, 410, 85, 5);
     textSize(20);
     setText();
-    if (raidStandard == 0) {
-      text("raid 1", 230, 66);
-      setRect(2);
-      
-    }
+    text("defrag drives (reset everything)", 230, 66);
+    setRect(2);
+    
+    setRect(0);
+    //rect(225, 85, 410, 40, 5);
+    setRect(2);
+    rect(537, 90, 93, 30, 5);
+    textSize(20);
+    setText();
+    text("bonus if defragged now", 230, 111);
+    text(speedBonusAdd, 542, 112);
   }
 }

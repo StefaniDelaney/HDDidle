@@ -16,7 +16,9 @@ void setup() {
 
 void draw() {
    background(0); //draw bg
+   speedBonusAdd = (bytes / pow(1024, scalingLevel)) / (1048576 * (speedBonus + 1));
    bitrate = ((carriers * 1) + (telegrams * 60) + (fax * 720) + (packets * 1500) + (dialup * 7168) + (multiplexers * 107520))/ pow(1024, scalingLevel); //calculate bitrate
+   bitrate = bitrate * (speedBonus + 1) * (fileSystemBonus + 1);
    switchValue = (0.125 * switchMult * switchMult2 + (cps * bitrate)) / pow(1024, scalingLevel);
    drawHeader(); //draws above ui elements
    drawFrame();
@@ -155,4 +157,36 @@ void scaleDownValues() { //basically shifts all values down by 1024
   telegramPrice = telegramPrice / 1024;
   faxPrice = faxPrice / 1024;
   packetPrice = packetPrice / 1024;
+  dialupPrice = dialupPrice / 1024;
+  multiplexerPrice = multiplexerPrice / 1024;
+}
+
+void resetVars() {
+  bytes = 0;
+  linkSwitchPrice = 1;
+  linkSwitchPriceMult = 1;
+  linkSwitch = 0;
+cpsPrice = 102400;
+cpsPriceMult = 1;
+cps = 0;
+carrierPrice = 10; 
+carrierPriceMult = 1;
+carriers = 0;
+telegramPrice = 1024;
+telegramPriceMult = 1;
+telegrams = 0;
+faxPrice = 102400;
+faxPriceMult = 1;
+fax = 0;
+packetPrice = 307200;
+packetPriceMult = 1;
+packets = 0;
+dialupPrice = 1048576;
+dialupPriceMult = 1;
+dialup = 0;
+multiplexerPrice = 10240000;
+multiplexerPriceMult = 1;
+multiplexers = 0;
+switchMult = 1;
+switchMult2 = 1;
 }

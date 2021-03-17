@@ -73,10 +73,17 @@ void mousePressed() {
       if (bytes >= multiplexerPrice) {
         multiplexers++;
         bytes = bytes - multiplexerPrice;
-        dialupPriceMult = multiplexerPriceMult * 1.1;
+        multiplexerPriceMult = multiplexerPriceMult * 1.1;
         multiplexerPrice = multiplexerPrice * multiplexerPriceMult;
       }
     }
+  }
+  else if (currentTab == 2) {
+     if (mouseClick == 1) {
+        speedBonuses++;
+        speedBonus = speedBonus + speedBonusAdd;
+        resetVars();
+  }
   }
 }
 
@@ -128,6 +135,7 @@ int detectMouseFrame() {
     }
   }
   else if (currentTab == 2) {
+    if (mouseY >= 40 && mouseY <= 125 && mouseX >= 210 && mouseX <= 635) return 1;
   }
   return 0;
 }
