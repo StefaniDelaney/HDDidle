@@ -36,6 +36,10 @@ float dialupPrice = 1048576;
 float dialupPriceMult = 1;
 int dialup = 0;
 
+float multiplexerPrice = 10240000;
+float multiplexerPriceMult = 1;
+int multiplexers = 0;
+
 float bytes = 0; //players byte count
 float bytesTemp;
 float bytesOut;

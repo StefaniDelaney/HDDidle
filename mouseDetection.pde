@@ -69,6 +69,14 @@ void mousePressed() {
         dialupPrice = dialupPrice * dialupPriceMult;
       }
     }
+     else if (mouseClick == 6) {
+      if (bytes >= multiplexerPrice) {
+        multiplexers++;
+        bytes = bytes - multiplexerPrice;
+        dialupPriceMult = multiplexerPriceMult * 1.1;
+        multiplexerPrice = multiplexerPrice * multiplexerPriceMult;
+      }
+    }
   }
 }
 
@@ -114,6 +122,9 @@ int detectMouseFrame() {
     }
     else if (mouseY >= 230 && mouseY <= 275 && mouseX >= 210 && mouseX <= 635) {
       return 5; //dial up
+    }
+    else if (mouseY >= 280 && mouseY <= 325 && mouseX >= 210 && mouseX <= 635) {
+      return 6; //multiplexer
     }
   }
   else if (currentTab == 2) {
