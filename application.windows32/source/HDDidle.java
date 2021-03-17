@@ -32,8 +32,8 @@ public void setup() {
 
 public void draw() {
    background(0); //draw bg
-   bitrate = ((carriers * 1) + (telegrams * 60) + (fax * 720) + (packets * 1500) )/ pow(1024, scalingLevel); //calculate bitrate
-   switchValue = (0.125f * switchMult * switchMult2 + ((cps / 20) * bitrate)) / pow(1024, scalingLevel);
+   bitrate = ((carriers * 1) + (telegrams * 60) + (fax * 720) + (packets * 1500) + (dialup * 7168) + (multiplexers * 107520))/ pow(1024, scalingLevel); //calculate bitrate
+   switchValue = (0.125f * switchMult * switchMult2 + (cps * bitrate)) / pow(1024, scalingLevel);
    drawHeader(); //draws above ui elements
    drawFrame();
    bitrateAdd();
@@ -212,7 +212,7 @@ public void drawFrame() {
     rect(210, 85, 425, 40, 5);
     textSize(20);
     setText();
-    text("5% of bytes/s", 215, 111);
+    text("100% of bytes/s", 215, 111);
     setRect(2);
     rect(457, 90, 75, 30, 5);
     rect(537, 90, 93, 30, 5);
@@ -234,7 +234,9 @@ public void drawFrame() {
     textSize(40);
     bytesD = convertBytes(bitrate);
     text(nf(bytesD, 0, 3), 20, 140);
-    text(endUnit, 80, 190);
+    String totalBitrate = endUnit + "/s";
+    text(totalBitrate, 80, 190);
+    
     setRect(0);
     rect(210, 40, 425, 40, 5);
     textSize(20);
@@ -290,6 +292,34 @@ public void drawFrame() {
     text(nf(bytesD, 0, 1), 542, 202);
     text(endUnit, 600, 202);
     text(packets, 463, 202);
+    
+    setRect(0);
+    rect(210, 220, 425, 40, 5);
+    textSize(20);
+    setText();
+    text("dial up modem 7kB/s", 215, 246);
+    setRect(2);
+    rect(457, 225, 75, 30, 5);
+    rect(537, 225, 93, 30, 5);
+    setText();
+    bytesD = convertBytes(dialupPrice);
+    text(nf(bytesD, 0, 1), 542, 247);
+    text(endUnit, 600, 247);
+    text(packets, 463, 247);
+    
+    setRect(0);
+    rect(210, 265, 425, 40, 5);
+    textSize(20);
+    setText();
+    text("multiplexer 105kB/s", 215, 291);
+    setRect(2);
+    rect(457, 270, 75, 30, 5);
+    rect(537, 270, 93, 30, 5);
+    setText();
+    bytesD = convertBytes(multiplexerPrice);
+    text(nf(bytesD, 0, 1), 542, 291);
+    text(endUnit, 600, 292);
+    text(multiplexers, 463, 292);
   }
   else if (currentTab == 2) {
     textSize(20);
@@ -330,7 +360,7 @@ public void mousePressed() {
         linkSwitch++;
         switchMult++;
         bytes = bytes - linkSwitchPrice;
-        linkSwitchPriceMult = linkSwitchPriceMult * 1.1f;
+        linkSwitchPriceMult = linkSwitchPriceMult * 1.01f;
         linkSwitchPrice = linkSwitchPrice * linkSwitchPriceMult;
       }
     }
@@ -338,7 +368,7 @@ public void mousePressed() {
       if (bytes >= cpsPrice) {
         cps++;
         bytes = bytes - cpsPrice;
-        cpsPriceMult = cpsPriceMult * 1.1f;
+        cpsPriceMult = cpsPriceMult * 2.0f;
         cpsPrice = cpsPrice * cpsPriceMult;
       }
     }
@@ -374,6 +404,22 @@ public void mousePressed() {
         bytes = bytes - packetPrice;
         packetPriceMult = packetPriceMult * 1.1f;
         packetPrice = packetPrice * packetPriceMult;
+      }
+    }
+    else if (mouseClick == 5) {
+      if (bytes >= dialupPrice) {
+        dialup++;
+        bytes = bytes - dialupPrice;
+        dialupPriceMult = dialupPriceMult * 1.1f;
+        dialupPrice = dialupPrice * dialupPriceMult;
+      }
+    }
+     else if (mouseClick == 6) {
+      if (bytes >= multiplexerPrice) {
+        multiplexers++;
+        bytes = bytes - multiplexerPrice;
+        dialupPriceMult = multiplexerPriceMult * 1.1f;
+        multiplexerPrice = multiplexerPrice * multiplexerPriceMult;
       }
     }
   }
@@ -419,6 +465,12 @@ public int detectMouseFrame() {
     else if (mouseY >= 180 && mouseY <= 225 && mouseX >= 210 && mouseX <= 635) {
       return 4; //packet
     }
+    else if (mouseY >= 230 && mouseY <= 275 && mouseX >= 210 && mouseX <= 635) {
+      return 5; //dial up
+    }
+    else if (mouseY >= 280 && mouseY <= 325 && mouseX >= 210 && mouseX <= 635) {
+      return 6; //multiplexer
+    }
   }
   else if (currentTab == 2) {
   }
@@ -436,7 +488,7 @@ float linkSwitchPrice = 1;
 float linkSwitchPriceMult = 1;
 int linkSwitch = 0; //amount of linked switches
 
-float cpsPrice = 10;
+float cpsPrice = 102400;
 float cpsPriceMult = 1;
 long cps = 0;
 
@@ -446,17 +498,25 @@ float carrierPrice = 10; //carrier pidgeon price
 float carrierPriceMult = 1;
 int carriers = 0; //amount of carrier pidgeons
 
-float telegramPrice = 120;
+float telegramPrice = 1024;
 float telegramPriceMult = 1;
 int telegrams = 0;
 
-float faxPrice = 1024;
+float faxPrice = 102400;
 float faxPriceMult = 1;
 int fax = 0;
 
-float packetPrice = 10240;
+float packetPrice = 307200;
 float packetPriceMult = 1;
 int packets = 0;
+
+float dialupPrice = 1048576;
+float dialupPriceMult = 1;
+int dialup = 0;
+
+float multiplexerPrice = 10240000;
+float multiplexerPriceMult = 1;
+int multiplexers = 0;
 
 float bytes = 0; //players byte count
 float bytesTemp;

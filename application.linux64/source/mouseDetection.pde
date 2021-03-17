@@ -15,7 +15,7 @@ void mousePressed() {
         linkSwitch++;
         switchMult++;
         bytes = bytes - linkSwitchPrice;
-        linkSwitchPriceMult = linkSwitchPriceMult * 1.1;
+        linkSwitchPriceMult = linkSwitchPriceMult * 1.01;
         linkSwitchPrice = linkSwitchPrice * linkSwitchPriceMult;
       }
     }
@@ -23,7 +23,7 @@ void mousePressed() {
       if (bytes >= cpsPrice) {
         cps++;
         bytes = bytes - cpsPrice;
-        cpsPriceMult = cpsPriceMult * 1.1;
+        cpsPriceMult = cpsPriceMult * 2.0;
         cpsPrice = cpsPrice * cpsPriceMult;
       }
     }
@@ -59,6 +59,22 @@ void mousePressed() {
         bytes = bytes - packetPrice;
         packetPriceMult = packetPriceMult * 1.1;
         packetPrice = packetPrice * packetPriceMult;
+      }
+    }
+    else if (mouseClick == 5) {
+      if (bytes >= dialupPrice) {
+        dialup++;
+        bytes = bytes - dialupPrice;
+        dialupPriceMult = dialupPriceMult * 1.1;
+        dialupPrice = dialupPrice * dialupPriceMult;
+      }
+    }
+     else if (mouseClick == 6) {
+      if (bytes >= multiplexerPrice) {
+        multiplexers++;
+        bytes = bytes - multiplexerPrice;
+        dialupPriceMult = multiplexerPriceMult * 1.1;
+        multiplexerPrice = multiplexerPrice * multiplexerPriceMult;
       }
     }
   }
@@ -103,6 +119,12 @@ int detectMouseFrame() {
     }
     else if (mouseY >= 180 && mouseY <= 225 && mouseX >= 210 && mouseX <= 635) {
       return 4; //packet
+    }
+    else if (mouseY >= 230 && mouseY <= 275 && mouseX >= 210 && mouseX <= 635) {
+      return 5; //dial up
+    }
+    else if (mouseY >= 280 && mouseY <= 325 && mouseX >= 210 && mouseX <= 635) {
+      return 6; //multiplexer
     }
   }
   else if (currentTab == 2) {

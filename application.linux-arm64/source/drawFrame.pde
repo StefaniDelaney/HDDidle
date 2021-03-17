@@ -38,7 +38,7 @@ void drawFrame() {
     rect(210, 85, 425, 40, 5);
     textSize(20);
     setText();
-    text("5% of bytes/s", 215, 111);
+    text("100% of bytes/s", 215, 111);
     setRect(2);
     rect(457, 90, 75, 30, 5);
     rect(537, 90, 93, 30, 5);
@@ -60,7 +60,9 @@ void drawFrame() {
     textSize(40);
     bytesD = convertBytes(bitrate);
     text(nf(bytesD, 0, 3), 20, 140);
-    text(endUnit, 80, 190);
+    String totalBitrate = endUnit + "/s";
+    text(totalBitrate, 80, 190);
+    
     setRect(0);
     rect(210, 40, 425, 40, 5);
     textSize(20);
@@ -116,6 +118,34 @@ void drawFrame() {
     text(nf(bytesD, 0, 1), 542, 202);
     text(endUnit, 600, 202);
     text(packets, 463, 202);
+    
+    setRect(0);
+    rect(210, 220, 425, 40, 5);
+    textSize(20);
+    setText();
+    text("dial up modem 7kB/s", 215, 246);
+    setRect(2);
+    rect(457, 225, 75, 30, 5);
+    rect(537, 225, 93, 30, 5);
+    setText();
+    bytesD = convertBytes(dialupPrice);
+    text(nf(bytesD, 0, 1), 542, 247);
+    text(endUnit, 600, 247);
+    text(packets, 463, 247);
+    
+    setRect(0);
+    rect(210, 265, 425, 40, 5);
+    textSize(20);
+    setText();
+    text("multiplexer 105kB/s", 215, 291);
+    setRect(2);
+    rect(457, 270, 75, 30, 5);
+    rect(537, 270, 93, 30, 5);
+    setText();
+    bytesD = convertBytes(multiplexerPrice);
+    text(nf(bytesD, 0, 1), 542, 291);
+    text(endUnit, 600, 292);
+    text(multiplexers, 463, 292);
   }
   else if (currentTab == 2) {
     textSize(20);

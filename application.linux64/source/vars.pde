@@ -10,7 +10,7 @@ float linkSwitchPrice = 1;
 float linkSwitchPriceMult = 1;
 int linkSwitch = 0; //amount of linked switches
 
-float cpsPrice = 10;
+float cpsPrice = 102400;
 float cpsPriceMult = 1;
 long cps = 0;
 
@@ -20,17 +20,25 @@ float carrierPrice = 10; //carrier pidgeon price
 float carrierPriceMult = 1;
 int carriers = 0; //amount of carrier pidgeons
 
-float telegramPrice = 120;
+float telegramPrice = 1024;
 float telegramPriceMult = 1;
 int telegrams = 0;
 
-float faxPrice = 1024;
+float faxPrice = 102400;
 float faxPriceMult = 1;
 int fax = 0;
 
-float packetPrice = 10240;
+float packetPrice = 307200;
 float packetPriceMult = 1;
 int packets = 0;
+
+float dialupPrice = 1048576;
+float dialupPriceMult = 1;
+int dialup = 0;
+
+float multiplexerPrice = 10240000;
+float multiplexerPriceMult = 1;
+int multiplexers = 0;
 
 float bytes = 0; //players byte count
 float bytesTemp;
